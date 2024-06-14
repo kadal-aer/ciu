@@ -4,29 +4,22 @@ const logger = require('morgan')
 const express = require('express')
 const axios = require('axios')
 const caliph = require("caliph-api");
+const path = require('path')
 
 const app = express()
 app.set('json spaces', 4)
 app.use(logger('dev'))
 
-app.all('/', (req, res) => {
-	const obj = {}
-	const used = process.memoryUsage()
-	for (let key in used) obj[key] = formatSize(used[key])
-	
-	const totalmem = os.totalmem()
-	const freemem = os.freemem()
-	obj.memoryUsage = `${formatSize(totalmem - freemem)} / ${formatSize(totalmem)}`
-	
-	res.json({
-		success: true,
-		message: 'Hello World!',
-		uptime: new Date(process.uptime() * 1000).toUTCString().split(' ')[4],
-		status: obj
-	})
-})
+const error_message = {
+    status: 500,
+    creator: 'RynXD',
+    message: 'Internal Server Error'
+};
 
-app.get('/chara/chat', async (req, res) => {
+const htmlPath = path.resolve(__dirname, 'public');
+app.use(express.static(htmlPath));
+
+app.get('/api/chara/chat', async (req, res) => {
     const { text, characterId } = req.query
 if (!text) {
     res.send({
@@ -48,8 +41,7 @@ if (!text) {
     status: 200,
 		creator: 'RynXD',
 		result: data.result
-    }
-    )
+    })
     })
     .catch((error) => {
       console.log(error);
@@ -57,7 +49,7 @@ if (!text) {
     });
 })
 
-app.get('/chara/info', async (req, res) => {
+app.get('/api/chara/info', async (req, res) => {
     const { characterId } = req.query
 	if (!characterId) {
     res.send({
@@ -79,7 +71,7 @@ app.get('/chara/info', async (req, res) => {
     })
 })
 
-app.get('/chara/search', async (req, res) => {
+app.get('/api/chara/search', async (req, res) => {
     const { name } = req.query
 	if (!name) {
     res.send({
@@ -90,6 +82,13 @@ app.get('/chara/search', async (req, res) => {
 		}
 	if (name) {
     axios.get(`https://andreans-cai.hf.space/api/chara/search?name=${name}`).then(({data}) => {
+    if (!data.result) {
+    return res.json({
+    status: 404,
+		creator: 'RynXD',
+		result: 'No character found'
+    })
+    }
     return res.send({
         status: 200,
 		creator: 'RynXD',
@@ -166,6 +165,74 @@ app.get('/api/whois', async (req, res) => {
       res.json(error_message);
     });
     }
+})
+
+
+app.get('/api', (req, res) => {
+const obj = {}
+	const used = process.memoryUsage()
+	for (let key in used) obj[key] = formatSize(used[key])
+	
+	const totalmem = os.totalmem()
+	const freemem = os.freemem()
+	obj.memoryUsage = `${formatSize(totalmem - freemem)} / ${formatSize(totalmem)}`
+	
+	res.json({
+		success: true,
+		creator: 'RynXD',
+		uptime: new Date(process.uptime() * 1000).toUTCString().split(' ')[4],
+		status: obj,
+		endpoint: [
+		{
+		name: 'Docs',
+		path: '/api'
+		},
+		{
+		name: 'Speech To Text',
+		path: '/speech'
+		},
+		{
+		name: 'Character AI',
+		paths: [
+		{
+		name: 'Search Character',
+		path: '/api/chara/search',
+		query: [ 'name' ]
+		},
+		{
+		name: 'Character Info',
+		path: '/api/chara/info',
+		query: [ 'charaterId' ]
+		},
+		{
+		name: 'Chat with Character AI',
+		path: '/api/chara/chat',
+		query: [ 'characterId', 'text', 'sessionId' ]
+		}
+		]
+		},
+		{
+		name: 'Tools',
+		paths: [
+		{
+		name: 'IP to Website',
+		path: '/api/ip2website',
+		query: [ 'IP' ]
+		},
+		{
+		name: 'Subdomain Finder',
+		path: '/api/subfinder',
+		query: [ 'domain' ]
+		},
+		{
+		name: 'Whois Domain',
+		path: '/api/whois',
+		query: [ 'domain' ]
+		},
+		]
+		}
+		]
+	})
 })
 
 const PORT = process.env.PORT || 3000
