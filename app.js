@@ -42,7 +42,7 @@ app.get('/api', async (req, res) => {
 		});
 		}
     const sessionId = req.query.sessionId || ''
-    axios.get(`${process.env.baseUrl}/api?characterId=${characterId}&sessionId=${sessionId}&text=${text}`).then(({data}) => {
+    axios.get(`https://andreans-cai.hf.space/api?characterId=${characterId}&sessionId=${sessionId}&text=${text}`).then(({data}) => {
     return res.json({
     status: 200,
 		creator: 'RynXD',
@@ -65,7 +65,7 @@ app.get('/chara/info', async (req, res) => {
 		message: `characterId is required`
 		});
 		}
-    axios.get(`${process.env.baseUrl}/api/chara/info?characterId=${name}`).then(({data}) => {
+    axios.get(`https://andreans-cai.hf.space/api/chara/info?characterId=${name}`).then(({data}) => {
     return res.send({
         status: 200,
 		creator: 'RynXD',
@@ -88,7 +88,7 @@ app.get('/chara/search', async (req, res) => {
 		});
 		}
 	if (name) {
-    axios.get(`${process.env.baseUrl}/api/chara/search?name=${name}`).then(({data}) => {
+    axios.get(`https://andreans-cai.hf.space/api/chara/search?name=${name}`).then(({data}) => {
     return res.send({
         status: 200,
 		creator: 'RynXD',
