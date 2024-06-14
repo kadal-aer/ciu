@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech to Text - RynXD</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            min-height: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <button class="btn" id="startButton">Start Listening</button>
+        <div class="result" id="resultContainer"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const startButton = document.getElementById('startButton');
+            const resultContainer = document.getElementById('resultContainer');
+            let recognition;
+
+            startButton.addEventListener('click', () => {
+                if (!recognition) {
+                    recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+                    recognition.continuous = true;
+                    recognition.interimResults = true;
+                    recognition.lang = 'id';
+
+                    recognition.onresult = (event) => {
+                        const result = event.results[event.results.length - 1][0].transcript;
+                        resultContainer.textContent = result;
+                    };
+
+                    recognition.onend = () => {
+                        recognition.stop();
+                        recognition = null;
+                        startButton.textContent = 'Start Listening';
+                    };
+                }
+
+                if (recognition && recognition.running) {
+                    recognition.stop();
+                    startButton.textContent = 'Start Listening';
+                } else {
+                    recognition.start();
+                    startButton.textContent = 'Stop Listening';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
