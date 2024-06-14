@@ -33,6 +33,10 @@ const obj = {}
 		path: '/api'
 		},
 		{
+		name: 'Bot WhatsApp Floo',
+		path: '/bot'
+		},
+		{
 		name: 'Speech To Text',
 		path: '/speech'
 		},
@@ -73,6 +77,11 @@ const obj = {}
 		name: 'Whois Domain',
 		path: '/api/tools/whois',
 		query: [ 'domain' ]
+		},
+		{
+		name: 'IP Geolocation',
+		path: '/api/tools/geoip',
+		query: [ 'IP' ]
 		},
 		]
 		}

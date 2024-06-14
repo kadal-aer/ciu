@@ -8,7 +8,7 @@ app.use(logger('dev'))
 const error_message = {
     status: 500,
     creator: 'RynXD',
-    message: 'Internal Server Error'
+    response: 'Internal Server Error'
 };
 
 app.get('/chat', async (req, res) => {
@@ -32,7 +32,7 @@ if (!text) {
     return res.json({
     status: 200,
 		creator: 'RynXD',
-		result: data.result
+		response: data.result
     })
     })
     .catch((error) => {
@@ -54,7 +54,7 @@ app.get('/info', async (req, res) => {
     return res.send({
         status: 200,
 		creator: 'RynXD',
-		result: data.result
+		response: data.result
 		});
     })
     .catch((error) => {
@@ -78,13 +78,13 @@ app.get('/search', async (req, res) => {
     return res.json({
     status: 404,
 		creator: 'RynXD',
-		result: 'No character found'
+		response: 'No character found'
     })
     }
     return res.send({
         status: 200,
 		creator: 'RynXD',
-		result: data.result
+		response: data.result
 		});
     }).catch((error) => {
       console.log(error);

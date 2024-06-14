@@ -24,6 +24,16 @@ app.use(express.static(htmlPath));
 
 app.use('/speech', speech)
 app.use('/api', route)
+app.get('/bot', (req, res) => {
+  res.redirect('https://wa.me/62858103573999?text=.menu')
+})
+
+app.get('/ip', (req, res, next) => {
+  const ip = req.ip;
+  console.log(`IP address of the visitor: ${ip}`);
+  res.send(ip)
+  next();
+});
 
 const PORT = process.env.PORT || 3000
 

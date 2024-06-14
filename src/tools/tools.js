@@ -26,7 +26,7 @@ app.get('/ip2website', async (req, res) => {
     axios.get(`https://webresolver.nl/api.php?key=C24VD-5YH3C-G3G48-EILO5&json&action=ip2websites&string=${ip}`).then(({data}) => {
     return res.send({
 		creator: 'RynXD',
-		result: data
+		response: data
 		});
     }).catch((error) => {
       console.log(error);
@@ -34,6 +34,8 @@ app.get('/ip2website', async (req, res) => {
     });
     }
 })
+
+
 
 app.get('/subfinder', async (req, res) => {
     const { domain } = req.query
@@ -48,7 +50,7 @@ app.get('/subfinder', async (req, res) => {
     caliph.tools.subfinder(domain).then( data => {
     return res.send({
 		creator: 'RynXD',
-		result: data
+		response: data
 		});
     }).catch((error) => {
       console.log(error);
@@ -70,7 +72,29 @@ app.get('/whois', async (req, res) => {
     axios.get(`https://api.botcahx.eu.org/api/webzone/whois?query=${domain}&apikey=afYO6dXO`).then(({data}) => {
     return res.send({
 		creator: 'RynXD',
-		result: data.result
+		response: data.result
+		});
+    }).catch((error) => {
+      console.log(error);
+      res.json(error_message);
+    });
+    }
+})
+
+app.get('/geoip', async (req, res) => {
+    const { ip } = req.query
+	if (!ip) {
+    res.send({
+        status: 400,
+		creator: 'RynXD',
+		message: `ip is required`
+		});
+		}
+	if (ip) {
+    axios.get(`https://webresolver.nl/api.php?key=C24VD-5YH3C-G3G48-EILO5&json&action=geoip&string=${ip}`).then(({data}) => {
+    return res.send({
+		creator: 'RynXD',
+		response: data
 		});
     }).catch((error) => {
       console.log(error);
