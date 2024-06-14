@@ -22,19 +22,7 @@ app.all('/', (req, res) => {
 		success: true,
 		message: 'Hello World!',
 		uptime: new Date(process.uptime() * 1000).toUTCString().split(' ')[4],
-		status: obj,
-		endpoint: [
-		    characterai: [
-		        search: 'chara/search',
-		        info: 'chara/info',
-		        chat: 'chara/chat'
-		        ],
-		    tools: [
-		        ip2website: 'api/ip2website',
-		        whois: 'api/whois',
-		        subfinder: 'api/subfinder'
-		        ]
-		]
+		status: obj
 	})
 })
 
