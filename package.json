@@ -3,6 +3,6 @@
     "express": "*",
     "morgan": "*",
     "axios": "*",
-    "caliph-api": "1.0.0",
+    "caliph-api": "1.0.0"
   }
 }
