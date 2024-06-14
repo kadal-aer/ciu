@@ -27,7 +27,7 @@ app.all('/', (req, res) => {
 
 app.get('/api', async (req, res) => {
     const { text, characterId } = req.query
-	if (!text) {
+if (!text) {
     res.send({
         status: 400,
 		creator: 'RynXD',
