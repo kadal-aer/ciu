@@ -2,12 +2,6 @@ const os = require('os')
 const bytes = require('bytes')
 const logger = require('morgan')
 const express = require('express')
-const puppeteer = require('puppeteer')
-const CharacterAI = require('node_characterai')
-const Parser = require('node_characterai/parser')
-
-const characterAI = new CharacterAI()
-characterAI.puppeteerPath = puppeteer.executablePath()
 
 const app = express()
 app.set('json spaces', 4)
@@ -31,72 +25,85 @@ app.all('/', (req, res) => {
 })
 
 app.get('/api', async (req, res) => {
-	try {
-		let { characterId, text, sessionId } = req.query
-		if (!characterId) return res.json({ success: false, message: 'Input parameter characterId' })
-		if (!text) return res.json({ success: false, message: 'Input parameter text' })
-		
-		if (!sessionId) {
-			const request = await characterAI.requester.request('https://beta.character.ai/chat/history/create/', {
-				headers: characterAI.getHeaders(), method: 'POST',
-				body: Parser.stringify({ character_external_id: characterId })
-			})
-			if (!request.ok()) return res.json({ success: false, message: 'Couldn\'t create a new chat' })
-			
-			const json = await Parser.parseJSON(request)
-			sessionId = json.external_id
+    const { text, characterId } = req.query
+	if (!text) {
+    res.send({
+        status: 400,
+		creator: 'RynXD',
+		message: `text is required`
+		});
 		}
-		
-		const chat = await characterAI.createOrContinueChat(characterId, sessionId)
-		const response = await chat.sendAndAwaitResponse(text, true)
-		const urlAvatar = `https://characterai.io/i/80/static/avatars/${response.srcAvatarFileName}`
-			
-		delete response.chat
-		res.json({
-			success: true,
-			message: '',
-			result: { ...response, urlAvatar, sessionId }
-		})
-	} catch (e) {
-		console.log(e)
-		res.json({ error: true, message: String(e) === '[object Object]' ? 'Internal Server Error' : String(e) })
-	}
+	if (!characterId) {
+    res.send({
+        status: 400,
+		creator: 'RynXD',
+		message: `characterId is required`
+		});
+		}
+    const sessionId = req.query.sessionId || ''
+    axios.get(`${process.env.baseUrl}/api?characterId=${characterId}&sessionId=${sessionId}&text=${text}`).then(({data}) => {
+    return res.json({
+    status: 200,
+		creator: 'RynXD',
+		result: data.result
+    }
+    )
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json(error_message);
+    });
 })
 
-app.get('/api/chara/info', async (req, res) => {
-	try {
-		const { characterId } = req.query
-		if (!characterId) return res.json({ success: false, message: 'Input parameter characterId' })
-		
-		const result = await characterAI.fetchCharacterInfo(characterId)
-		if (!result) return res.json({ success: false, message: 'Invalid characterId' })
-		
-		res.json({ success: true, message: '', result })
-	} catch (e) {
-		console.log(e)
-		res.json({ error: true, message: String(e) === '[object Object]' ? 'Internal Server Error' : String(e) })
-	}
+app.get('/chara/info', async (req, res) => {
+    const { characterId } = req.query
+	if (!characterId) {
+    res.send({
+        status: 400,
+		creator: 'RynXD',
+		message: `characterId is required`
+		});
+		}
+    axios.get(`${process.env.baseUrl}/api/chara/info?characterId=${name}`).then(({data}) => {
+    return res.send({
+        status: 200,
+		creator: 'RynXD',
+		result: data.result
+		});
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json(error_message);
+    })
 })
 
-app.get('/api/chara/search', async (req, res) => {
-	try {
-		const { name } = req.query
-		if (!name) return res.json({ success: false, message: 'Input parameter name' })
-		
-		const { characters } = await characterAI.searchCharacters(name)
-		if (!characters.length) return res.json({ success: false, message: 'Character not found' })
-		
-		res.json({ success: true, message: '', result: characters })
-	} catch (e) {
-		console.log(e)
-		res.json({ error: true, message: String(e) === '[object Object]' ? 'Internal Server Error' : String(e) })
-	}
+app.get('/chara/search', async (req, res) => {
+    const { name } = req.query
+	if (!name) {
+    res.send({
+        status: 400,
+		creator: 'RynXD',
+		message: `name is required`
+		});
+		}
+	if (name) {
+    axios.get(`${process.env.baseUrl}/api/chara/search?name=${name}`).then(({data}) => {
+    return res.send({
+        status: 200,
+		creator: 'RynXD',
+		result: data.result
+		});
+    }).catch((error) => {
+      console.log(error);
+      res.json(error_message);
+    });
+    }
 })
 
 const PORT = process.env.PORT || 3000
-app.listen(PORT, async () => {
+
+app.listen(PORT, () => {
 	console.log('App running on port', PORT)
-	//await characterAI.authenticateWithToken(process.env.cToken)
 })
 
 function formatSize(num) {
