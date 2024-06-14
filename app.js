@@ -9,18 +9,6 @@ const app = express()
 app.set('json spaces', 4)
 app.use(logger('dev'))
 
-const endpoint = {
-    characterai: [
-    search: 'chara/search',
-    info: 'chara/info',
-    chat: 'chara/chat'
-    ],
-    tools: [
-    ip2website: 'api/ip2website',
-    whois: 'api/whois',
-    subfinder: 'api/subfinder'
-    ]
-}
 app.all('/', (req, res) => {
 	const obj = {}
 	const used = process.memoryUsage()
@@ -35,7 +23,18 @@ app.all('/', (req, res) => {
 		message: 'Hello World!',
 		uptime: new Date(process.uptime() * 1000).toUTCString().split(' ')[4],
 		status: obj,
-		endpoint: endpoint
+		endpoint: [
+		    characterai: [
+		        search: 'chara/search',
+		        info: 'chara/info',
+		        chat: 'chara/chat'
+		        ],
+		    tools: [
+		        ip2website: 'api/ip2website',
+		        whois: 'api/whois',
+		        subfinder: 'api/subfinder'
+		        ]
+		]
 	})
 })
 
