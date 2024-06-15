@@ -4,6 +4,9 @@
     "caliph-api": "1.0.0",
     "express": "*",
     "express-ip": "^1.0.4",
-    "morgan": "*"
+    "express-useragent": "^1.0.15",
+    "geoip-lite": "^1.4.10",
+    "morgan": "*",
+    "ua-parser-js": "^1.0.38"
   }
 }
