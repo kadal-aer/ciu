@@ -28,25 +28,12 @@ app.get('/bot', (req, res) => {
   res.redirect('https://wa.me/62858103573999?text=.menu')
 })
 
+const requestIP = require('request-ip');
 
-const useragent = require("express-useragent");
-const geoip = require("geoip-lite");
-const uap = require("ua-parser-js");
-
-app.use(useragent.express());
-
-app.set("trust proxy", true);
-
-app.get("/user", (req, res) => {
-  const ip = req.ip;
-  const geo = geoip.lookup(ip);
-  const country = geo ? geo.country : "Unknown";
-  const isMobile = req.useragent.isMobile;
-  const ua = uap(req.headers["user-agent"]);
-  res.json({ ip, country, isMobile, userAgent: ua });
-});
-
-
+app.get('/user', (req, res) => {
+    const ipAddress = requestIP.getClientIp(req);
+    res.send(ipAddress)
+})
 
 
 const PORT = process.env.PORT || 3000
