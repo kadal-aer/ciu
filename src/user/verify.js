@@ -51,7 +51,7 @@ ip: ipUser
 return dtb
 }
 
-async function sendData(res, data) {
+async function sendData(res, data, code) {
 const response = await fetch('https://api.rynxd.link/api/update-data?apikey=kontol', {
         method: 'POST',
         headers: {
@@ -85,7 +85,7 @@ app.get('/verify', async (req, res) => {
     try {
     const userWithCode = await getUserByCode(res, code)
     const data = await preData(userWithCode, ipUser)
-    sendData(res, data)
+    sendData(res, data, code)
     } catch(e) {
     console.log(e);
     res.json(error_message);
