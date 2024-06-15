@@ -8,9 +8,14 @@ const path = require('path')
 const tools = require('./tools/tools.js')
 const chara = require('./chara/chara.js')
 const app = express()
+const requestIP = require('request-ip');
 app.set('json spaces', 4)
 app.use(logger('dev'))
-
+const waktu = new Date((new Date).toLocaleString("en-US", {
+    timeZone: "Asia/Jakarta"  
+    }));
+    
+   
 app.use('/tools', tools)
 app.use('/chara', chara)
 app.get('/', (req, res) => {
@@ -21,11 +26,13 @@ const obj = {}
 	const totalmem = os.totalmem()
 	const freemem = os.freemem()
 	obj.memoryUsage = `${formatSize(totalmem - freemem)} / ${formatSize(totalmem)}`
-	
+	const ipAddress = requestIP.getClientIp(req);
 	res.json({
 		success: true,
 		creator: 'RynXD',
+		ip: ipAddress,
 		uptime: new Date(process.uptime() * 1000).toUTCString().split(' ')[4],
+		time: waktu,
 		status: obj,
 		endpoint: [
 		{
