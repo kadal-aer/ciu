@@ -1,12 +1,11 @@
 {
   "dependencies": {
-    "axios": "*",
-    "caliph-api": "1.0.0",
-    "express": "*",
-    "express-ip": "^1.0.4",
+    "axios": "^1.7.2",
+    "caliph-api": "^1.0.1",
+    "express": "^4.19.2",
     "express-useragent": "^1.0.15",
     "geoip-lite": "^1.4.10",
-    "morgan": "*",
+    "morgan": "^1.10.0",
     "ua-parser-js": "^1.0.38"
   }
 }
