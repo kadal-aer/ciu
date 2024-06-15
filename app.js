@@ -11,7 +11,10 @@ const route = require('./src/route.js')
 const app = express()
 app.set('json spaces', 4)
 app.use(logger('dev'))
-
+const waktu = new Date((new Date).toLocaleString("en-US", {
+    timeZone: "Asia/Jakarta"  
+    }));
+    
 const error_message = {
     status: 500,
     creator: 'RynXD',
@@ -30,9 +33,14 @@ app.get('/bot', (req, res) => {
 
 const requestIP = require('request-ip');
 
-app.get('/user', (req, res) => {
+app.get('/myinfo', (req, res) => {
     const ipAddress = requestIP.getClientIp(req);
-    res.send(ipAddress)
+    //res.send(ipAddress)
+    res.json({
+    status: 'success',
+    ip: ipAddress,
+    waktu: waktu
+    })
 })
 
 
