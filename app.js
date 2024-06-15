@@ -7,6 +7,7 @@ const caliph = require("caliph-api");
 const path = require('path')
 const speech = require('./src/speech.js')
 const route = require('./src/route.js')
+const user = require('./src/user/verify.js')
 
 const app = express()
 app.set('json spaces', 4)
@@ -31,8 +32,9 @@ app.get('/bot', (req, res) => {
   res.redirect('https://wa.me/62858103573999?text=.menu')
 })
 
-const requestIP = require('request-ip');
+app.use('/user', user)
 
+const requestIP = require('request-ip');
 app.get('/myinfo', (req, res) => {
     const ipAddress = requestIP.getClientIp(req);
     //res.send(ipAddress)
