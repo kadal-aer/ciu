@@ -6,6 +6,7 @@ const waktu = new Date((new Date).toLocaleString("en-US", {
     }));
 const app = express()
 app.set('json spaces', 4)
+const fetch = require('node-fetch')
 
 const error_message = {
     status: 500,
