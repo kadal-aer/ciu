@@ -32,12 +32,12 @@ async function getUserByCode(res, code) {
             userWithCode.push(key)
         }
     }
-    if (userWithCode.length < 1) {
+    /*if (userWithCode.length < 1) {
         res.json({
         status: 404,
         response: 'No user found'
         })
-    }
+    }*/
     return userWithCode
 }
 
