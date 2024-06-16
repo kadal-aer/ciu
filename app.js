@@ -18,7 +18,7 @@ const waktu = new Date((new Date).toLocaleString("en-US", {
     
 const error_message = {
     status: 500,
-    creator: 'RynXD',
+    creator: 'AntiDev',
     message: 'Internal Server Error'
 };
 
