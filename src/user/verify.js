@@ -14,7 +14,7 @@ const error_message = {
     message: 'Internal Server Error'
 };
 async function getData() {
-const result = await axios.get('https://api.rynxd.link/api/get-data?apikey=kontol')
+const result = await axios.get('https://api-antidev.run.place/user/get-data')
     return result.data
 }
 
@@ -52,7 +52,7 @@ return dtb
 }
 
 async function sendData(res, data, code) {
-const response = await fetch('https://api.rynxd.link/api/update-data?apikey=kontol', {
+const response = await fetch('https://api-antidev.run.place/user/update-data', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
@@ -63,8 +63,7 @@ const response = await fetch('https://api.rynxd.link/api/update-data?apikey=kont
         res.json({
         status: 'success',
         code: code,
-        waktu: waktu,
-        response: 'Sekarang anda telah terverifikasi, mohon gunakan bot dengan bijak'
+        response: 'Anda telah terverifikasi, mohon gunakan bot dengan bijak'
         })
         } else {
         console.log(e);
@@ -76,7 +75,7 @@ app.get('/verify', async (req, res) => {
     const ipUser = requestIP.getClientIp(req);
     const code = req.query.code
     if (!code) {
-    res.json({
+    return res.json({
         status: 400,
         response: 'code is required!'
         })
