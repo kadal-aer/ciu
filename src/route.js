@@ -6,6 +6,7 @@ const axios = require('axios')
 const caliph = require("caliph-api");
 const path = require('path')
 const tools = require('./tools/tools.js')
+const mail = require('./tools/mail.js')
 const chara = require('./chara/chara.js')
 const app = express()
 const requestIP = require('request-ip');
@@ -17,6 +18,7 @@ const waktu = new Date((new Date).toLocaleString("en-US", {
     
    
 app.use('/tools', tools)
+app.use('/mail', mail)
 app.use('/chara', chara)
 app.get('/', (req, res) => {
 const obj = {}
