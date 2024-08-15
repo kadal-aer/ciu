@@ -35,7 +35,7 @@ const obj = {}
 	const ipAddress = requestIP.getClientIp(req);
 	res.json({
 		success: true,
-		creator: 'AntiDev',
+		creator: 'AntiDEV',
 		ip: ipAddress,
 		uptime: new Date(process.uptime() * 1000).toUTCString().split(' ')[4],
 		time: waktu,
