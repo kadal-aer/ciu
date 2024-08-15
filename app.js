@@ -18,7 +18,7 @@ const waktu = new Date((new Date).toLocaleString("en-US", {
     
 const error_message = {
     status: 500,
-    creator: 'AntiDev',
+    creator: 'AntiDEV',
     message: 'Internal Server Error'
 };
 
@@ -28,9 +28,6 @@ app.use(express.static(htmlPath));
 
 app.use('/speech', speech)
 app.use('/api', route)
-app.get('/bot', (req, res) => {
-  res.redirect('https://wa.me/62858103573999?text=.menu')
-})
 
 app.use('/user', user)
 

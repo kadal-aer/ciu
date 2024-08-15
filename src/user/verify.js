@@ -10,7 +10,7 @@ const fetch = require('node-fetch')
 
 const error_message = {
     status: 500,
-    creator: 'RynXD',
+    creator: 'AntiDEV',
     message: 'Internal Server Error'
 };
 async function getData() {

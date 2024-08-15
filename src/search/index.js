@@ -2,8 +2,8 @@ const logger = require('morgan')
 const express = require('express')
 const axios = require('axios')
 const caliph = require("caliph-api");
-const api = require('api-dylux')
-const { spotifydl } = require('../model/scrape-dl')
+let yts = require ('yt-search');
+const { spotifySearch, tiktokSearch } = require('../model/scrape.js')
 const app = express()
 app.set('json spaces', 4)
 app.use(logger('dev'))
@@ -12,20 +12,42 @@ const error_message = {
     creator: 'AntiDEV',
     message: 'Internal Server Error'
 };
+app.get('/pinterest', async (req, res) => {
+    const { query } = req.query
+	if (!query) {
+    res.send({
+        status: 400,
+		creator: 'AntiDEV',
+		message: `query is required`
+		});
+		}
+	if (query) {
+    caliph.search.pin(query).then( a => {
+    return res.send({
+		creator: 'AntiDEV',
+		response: a
+		});
+    }).catch((error) => {
+      console.log(error);
+      res.json(error_message);
+    });
+    }
+})
+
 app.get('/tiktok', async (req, res) => {
-    const { url } = req.query
-	if (!url) {
+    const { query } = req.query
+	if (!query) {
     res.send({
         status: 400,
 		creator: 'AntiDEV',
-		message: `url is required`
+		message: `query is required`
 		});
 		}
-	if (url) {
-    api.tiktok(url).then(data => {
+	if (query) {
+    tiktokSearch(query).then( a => {
     return res.send({
 		creator: 'AntiDEV',
-		response: data.result
+		response: a
 		});
     }).catch((error) => {
       console.log(error);
@@ -34,42 +56,20 @@ app.get('/tiktok', async (req, res) => {
     }
 })
 
-app.get('/igdl', async (req, res) => {
-    const { url } = req.query
-	if (!url) {
+app.get('/youtube', async (req, res) => {
+    const { query } = req.query
+	if (!query) {
     res.send({
         status: 400,
 		creator: 'AntiDEV',
-		message: `url is required`
+		message: `query is required`
 		});
 		}
-	if (url) {
-    api.igdl(url).then(data => {
+	if (query) {
+    yts(query).then( a => {
     return res.send({
 		creator: 'AntiDEV',
-		response: data.result
-		});
-    }).catch((error) => {
-      console.log(error);
-      res.json(error_message);
-    });
-    }
-})
-
-app.get('/facebook', async (req, res) => {
-    const { url } = req.query
-	if (!url) {
-    res.send({
-        status: 400,
-		creator: 'AntiDEV',
-		message: `url is required`
-		});
-		}
-	if (url) {
-    api.fbdl(url).then(data => {
-    return res.send({
-		creator: 'AntiDEV',
-		response: data.result
+		response: a.all
 		});
     }).catch((error) => {
       console.log(error);
@@ -79,20 +79,19 @@ app.get('/facebook', async (req, res) => {
 })
 
 app.get('/spotify', async (req, res) => {
-    const { url } = req.query
-	if (!url) {
+    const { query } = req.query
+	if (!query) {
     res.send({
         status: 400,
 		creator: 'AntiDEV',
-		message: `url is required`
+		message: `query is required`
 		});
 		}
-	if (url) {
-    spotifydl(url).then(data => {
-    console.log(data)
+	if (query) {
+    spotifySearch(query).then( a => {
     return res.send({
 		creator: 'AntiDEV',
-		response: data
+		response: a.data
 		});
     }).catch((error) => {
       console.log(error);

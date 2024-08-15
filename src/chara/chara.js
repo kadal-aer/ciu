@@ -7,7 +7,7 @@ app.use(logger('dev'))
 
 const error_message = {
     status: 500,
-    creator: 'AntiDev',
+    creator: 'AntiDEV',
     response: 'Internal Server Error'
 };
 
@@ -16,14 +16,14 @@ app.get('/chat', async (req, res) => {
 if (!text) {
     res.send({
         status: 400,
-		creator: 'AntiDev',
+		creator: 'AntiDEV',
 		message: `text is required`
 		});
 		}
 	if (!characterId) {
     res.send({
         status: 400,
-		creator: 'AntiDev',
+		creator: 'AntiDEV',
 		message: `characterId is required`
 		});
 		}
@@ -31,7 +31,7 @@ if (!text) {
     axios.get(`https://andreans-cai.hf.space/api?characterId=${characterId}&sessionId=${sessionId}&text=${text}`).then(({data}) => {
     return res.json({
     status: 200,
-		creator: 'AntiDev',
+		creator: 'AntiDEV',
 		response: data.result
     })
     })
@@ -46,14 +46,14 @@ app.get('/info', async (req, res) => {
 	if (!characterId) {
     res.send({
         status: 400,
-		creator: 'AntiDev',
+		creator: 'AntiDEV',
 		message: `characterId is required`
 		});
 		}
     axios.get(`https://andreans-cai.hf.space/api/chara/info?characterId=${name}`).then(({data}) => {
     return res.send({
         status: 200,
-		creator: 'AntiDev',
+		creator: 'AntiDEV',
 		response: data.result
 		});
     })
@@ -68,7 +68,7 @@ app.get('/search', async (req, res) => {
 	if (!name) {
     res.send({
         status: 400,
-		creator: 'AntiDev',
+		creator: 'AntiDEV',
 		message: `name is required`
 		});
 		}
@@ -77,13 +77,13 @@ app.get('/search', async (req, res) => {
     if (!data.result) {
     return res.json({
     status: 404,
-		creator: 'AntiDev',
+		creator: 'AntiDEV',
 		response: 'No character found'
     })
     }
     return res.send({
         status: 200,
-		creator: 'AntiDev',
+		creator: 'AntiDEV',
 		response: data.result
 		});
     }).catch((error) => {

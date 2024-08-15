@@ -8,6 +8,8 @@ const path = require('path')
 const tools = require('./tools/tools.js')
 const mail = require('./tools/mail.js')
 const chara = require('./chara/chara.js')
+const media = require('./downloader/index.js')
+const search = require('./search/index.js')
 const app = express()
 const requestIP = require('request-ip');
 app.set('json spaces', 4)
@@ -20,6 +22,8 @@ const waktu = new Date((new Date).toLocaleString("en-US", {
 app.use('/tools', tools)
 app.use('/mail', mail)
 app.use('/chara', chara)
+app.use('/media', media)
+app.use('/search', search)
 app.get('/', (req, res) => {
 const obj = {}
 	const used = process.memoryUsage()
@@ -40,10 +44,6 @@ const obj = {}
 		{
 		name: 'Docs',
 		path: '/api'
-		},
-		{
-		name: 'Bot WhatsApp Floo',
-		path: '/bot'
 		},
 		{
 		name: 'Speech To Text',

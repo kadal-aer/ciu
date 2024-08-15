@@ -1,0 +1,377 @@
+openapi: 3.1.0
+info:
+  title: AntiDEV
+  description: AntiDEV API is Free API rest that you can use as long as it alive.
+  contact:
+    #url: https://api.antidev.me/api
+    #name: AntiDEV
+    email: contact@antidev.me
+  termsOfService: https://api.antidev.me/terms
+paths:
+  /api:
+    get:
+      tags:
+        - Home
+      summary: Features
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/gpt:
+    get:
+      tags:
+        - Chat AI
+      description: Chat with Gpt AI
+      parameters:
+        - name: text
+          in: query
+          required: true
+          schema:
+            type: string
+            example: hai
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+#=================================================#
+  /api/bingimage:
+    post:
+      tags:
+        - Bing Image Creator
+      description: Generate Image with AI
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+            example: anak kecil bermain bola
+        - name: apikey
+          in: query
+          required: true
+          schema:
+            type: string
+            example: apikey
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+#=================================================#
+  /api/chara/search:
+    get:
+      tags:
+        - Character AI
+      description: Search Character From Character AI
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+            example: Gojo Satoru
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/chara/info:
+    get:
+      tags:
+        - Character AI
+      description: Detail of Character From Character AI
+      parameters:
+        - name: characterId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/chara/chat:
+    get:
+      tags:
+        - Character AI
+      description: Chat with Character AI
+      parameters:
+        - name: characterId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: text
+          in: query
+          required: true
+          schema:
+            type: string
+            example: Nama kamu siapa?
+        - name: sessionId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+#=================================================#
+  /api/search/pinterest:
+    get:
+      tags:
+        - Search
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/search/tiktok:
+    get:
+      tags:
+        - Search
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/search/youtube:
+    get:
+      tags:
+        - Search
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/search/spotify:
+    get:
+      tags:
+        - Search
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+#=================================================#
+  /api/media/tiktok:
+    get:
+      tags:
+        - Downloader
+      description: Tiktok Downloader support Video and Photo Slide
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/media/igdl:
+    get:
+      tags:
+        - Downloader
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/media/twitter:
+    get:
+      tags:
+        - Downloader
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/media/facebook:
+    get:
+      tags:
+        - Downloader
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/media/youtube:
+    get:
+      tags:
+        - Downloader
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/media/spotify:
+    get:
+      tags:
+        - Downloader
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+#=================================================#
+  /api/tools/ip2website:
+    get:
+      tags:
+        - Tools
+      description: Convert IP Address to Website Name
+      parameters:
+        - name: ip
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/tools/subfinder:
+    get:
+      tags:
+        - Tools
+      description: Scanning Subdomain From Domain
+      parameters:
+        - name: domain
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/tools/geoip:
+    get:
+      tags:
+        - Tools
+      description: Geo location from IP Address
+      parameters:
+        - name: ip
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/get-data:
+    get:
+      tags:
+        - Cloud Database
+      description: Get Data User
+      parameters:
+        - name: apikey
+          in: query
+          required: true
+          schema:
+            type: string
+            example: apikey
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+#=================================================#
+  /api/update-data:
+    post:
+      tags:
+        - Cloud Database
+      description: Update Data User
+      parameters:
+        - name: apikey
+          in: query
+          required: true
+          schema:
+            type: string
+            example: apikey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                users: {
+                6285810357399@s.whatsapp.net: {
+                name: RynXD,
+                register: true,
+                limit: Infinity
+                },
+                628888888882@s.whatsapp.net: {
+                name: AntiDev,
+                register: false,
+                limit: 37
+                }
+                }
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
