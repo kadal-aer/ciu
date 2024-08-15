@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "api-dylux": "^1.8.5",
-    "@bochilteam/scraper": "*",
     "axios": "^1.7.2",
     "caliph-api": "^1.0.1",
     "express": "^4.19.2",
