@@ -7,5 +7,15 @@
     "morgan": "*",
     "nodemailer": "^6.9.14",
     "request-ip": "^3.3.0"
-  }
+  },
+  "name": "cau",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
